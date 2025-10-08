@@ -12,9 +12,14 @@ public class Area {
     }
 
     public String getAreaName() {return AreaName;}
+
+    public List<Pokemon> getPossiblePokemon() {return PossiblePokemon;}
+
     public Pokemon rollEncounter(){
-        Pokemon caught = PossiblePokemon.get(Random.nextInt(PossiblePokemon.size()));
-        System.out.println("You caught: " + caught.getPokemonName() + "!");
-        return caught;
+        return PossiblePokemon.get(Random.nextInt(PossiblePokemon.size()));
+    }
+
+    public String toString(){
+        return AreaName;
     }
 }
