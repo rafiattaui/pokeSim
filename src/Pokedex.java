@@ -9,9 +9,9 @@ public class Pokedex {
 
     static {
         register(new Pokemon(1, "Bulbasaur", List.of(ElementType.GRASS,
-                ElementType.POISON), 45));
+                ElementType.POISON), 0.45));
 
-        register(new Pokemon(19, "Ratatta", List.of(ElementType.NORMAL), 45));
+        register(new Pokemon(19, "Ratatta", List.of(ElementType.NORMAL), 0.5));
     }
 
     private static void register(Pokemon pokemon){
