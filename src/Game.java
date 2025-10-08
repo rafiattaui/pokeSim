@@ -37,7 +37,6 @@ public class Game {
     }
 
     public void init() {
-
         while (Running) {
             System.out.println();
             switch (currentState) {
@@ -50,6 +49,13 @@ public class Game {
         }
     }
 
+    // TODO - Figure out a way to open inventory like an overlay, rather than using states. Use a temporary overlay?
+
+    private static String getUserInput(){
+        System.out.println("> ");
+        return scanner.nextLine().trim();
+    }
+
     private static void showMainMenu() {
         System.out.println("Welcome to pokeSim!");
         System.out.println("1 -> Explore an area");
@@ -57,7 +63,7 @@ public class Game {
         System.out.println("3 -> Exit");
         System.out.println("Select an option:");
 
-        int Choice = Integer.parseInt(scanner.nextLine());
+        int Choice = Integer.parseInt(getUserInput());
         switch (Choice) {
             case 1 -> currentState = GameState.EXPLORING;
             case 2 -> currentState = GameState.INVENTORY;
@@ -77,8 +83,8 @@ public class Game {
         }
 
         System.out.println("Type the number of the area you'd like to explore:");
-        int input = scanner.nextInt();
-        Area selectedArea = availableAreas.get(input - 1);
+        String input = getUserInput();
+        Area selectedArea = availableAreas.get(Integer.parseInt(input) - 1);
 
         System.out.println("\nExploring the " + selectedArea.toString() + " area.");
         currentArea = selectedArea;
@@ -95,7 +101,7 @@ public class Game {
         System.out.println("\nWhat would you like to do?");
         System.out.println("1 -> Catch");
         System.out.println("2 -> Run Away");
-        int input = scanner.nextInt();
+        int input = Integer.parseInt(getUserInput());
         switch (input) {
             case 1 -> currentState = GameState.CATCHING;
             case 2 -> currentState = GameState.EXPLORING;
@@ -114,9 +120,7 @@ public class Game {
                             i + 1, balls[i].getName(), balls[i].getModifier());
                 }
 
-                System.out.print("Enter number: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // clear newline
+                int choice = Integer.parseInt(getUserInput());
 
                 if (choice >= 1 && choice <= balls.length) {
                     selectedPokeball = balls[choice - 1];
@@ -124,7 +128,7 @@ public class Game {
                     System.out.println("Invalid number! Try again.");
                 }
 
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number!");
                 scanner.nextLine(); // clear invalid input
             }
@@ -151,7 +155,7 @@ public class Game {
         } else {
             System.out.println(currentPokemon.getPokemonName() + " broke free!");
             System.out.println("Try again? (y/n)");
-            String retry = scanner.nextLine().trim();
+            String retry = getUserInput();
             if (retry.equalsIgnoreCase("y")) {
                 handleCatching();
             } else {
